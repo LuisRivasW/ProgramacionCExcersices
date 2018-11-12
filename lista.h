@@ -48,3 +48,13 @@ void insertarInicio(node **lp,node **np){
         (*np)->sig=puntero;
 
     }
+
+node *duplicarNodo(node *lp){
+    if(lp==NULL){
+        printf("La lista esta vacia no se puede duplicar");
+        return NULL;
+    }
+    
+    return crearNodo(lp->valor);
+
+}
