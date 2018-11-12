@@ -34,3 +34,17 @@ void imprimir(node *lp) {
         printf("%i->", auxp->valor);;
     printf("NULL\n");
 }
+
+
+void insertarInicio(node **lp,node **np){
+    node * auxp; node * puntero;
+    
+    if (*lp==NULL){
+        *lp= *np;
+        return;
+    }
+        puntero=*lp;
+        *lp=*np;
+        (*np)->sig=puntero;
+
+    }
