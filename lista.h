@@ -49,12 +49,31 @@ void insertarInicio(node **lp,node **np){
 
     }
 
-node *duplicarNodo(node *lp){
+void duplicarNodo(node *lp, node **np){
     if(lp==NULL){
         printf("La lista esta vacia no se puede duplicar");
-        return NULL;
+        return;
     }
-    
-    return crearNodo(lp->valor);
+    *np = crearNodo(lp->valor);
+}
 
+void head(node *lp, node **np){
+    if (lp==NULL){
+        printf("La lista esta vacia");
+        return;
+    }
+    duplicarNodo(lp,np);   
+}
+
+void duplicarLista(node *lp, node ** np){
+    if (lp==NULL){
+        printf("La lista esta vacia");
+        return;
+    }
+    *np = NULL;
+    node *auxp; node *duplicado = NULL;
+    for (auxp=lp;auxp !=NULL;auxp=auxp->sig){
+        duplicarNodo(auxp, &duplicado);
+        insertarFinal(np, &duplicado);
+    }
 }
