@@ -1,30 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "nodo.h"
 
-typedef struct _dato
+typedef struct _rel
 {
     char *nombre;
-    char *valor;
-    struct _dato *next;
+    nodo *a;
+    nodo *b;
+    struct _rel *next;
 
-} atributo;
+} relaciones;
 
 /**
  * Crea el nodo y le reserva su espacio de memoria
  * recibe el nombre del atributo y el valor
  */
-atributo *crearAtributo(char *nombre, char *valor)
+relaciones *crearRelacion(char *nombre, nodo *a, nodo *b)
 {
 
-    printf("Crear Atributo\n");
-    atributo *auxp;
-    auxp = (atributo *)malloc(sizeof(atributo));
-    printf("Atributo creado\n");
+    printf("Crear Relacion\n");
+    relaciones *auxp;
+    auxp = (relaciones *)malloc(sizeof(relaciones));
+    printf("Nodo creado\n");
     auxp->nombre = (char *)malloc(sizeof(char));
-    auxp->valor = (char *)malloc(sizeof(char));
+    auxp->a = a;
+    auxp->b = b;
     strcpy(auxp->nombre, nombre);
-    strcpy(auxp->valor, valor);
     auxp->next = NULL;
     return auxp;
 }
@@ -32,10 +34,11 @@ atributo *crearAtributo(char *nombre, char *valor)
  *libera el espacio de memoria que se reservara en atributo para asi limpiarla 
  * recibe un doble puntero a atributo
  */
-void eliminarAtributo(atributo **recibir)
+void eliminarRelacion(relaciones **recibir)
 {
     free((*recibir)->nombre);
-    free((*recibir)->valor);
+    // free((*recibir)->a);
+    // free((*recibir)->b);
     free(*recibir);
 }
 
@@ -43,7 +46,7 @@ void eliminarAtributo(atributo **recibir)
  * inserta un elemento al final de la lista
  * recibe el elemento que se va a insertar y la lista en la que se va a insertar
  */
-void insertarAtributo(atributo **lp, atributo **np)
+void insertarRelacion(relaciones **lp, relaciones **np)
 {
 
     if (*lp == NULL)
@@ -51,29 +54,17 @@ void insertarAtributo(atributo **lp, atributo **np)
         *lp = *np;
         return;
     }
-    atributo *auxp;
+    relaciones *auxp;
     for (auxp = *lp; auxp->next != NULL; auxp = auxp->next)
         ;
     auxp->next = *np;
     return;
 }
-void imprimirAtributo(atributo *lp)
+void imprimirRelacion(relaciones *lp)
 {
-
-    atributo *auxp;
+    relaciones *auxp;
     for (auxp = lp; auxp != NULL; auxp = auxp->next)
-        printf("%s: %s -> ", auxp->nombre, auxp->valor);
-    ;
-    printf("NULL");
+        printf("%s: %s -> %s => ", auxp->nombre, auxp->a->nombre, auxp->b->nombre);
+    printf("NULL\n");
 }
 
-//void agregarAtributos(atributo *lp)
-//{
-  //      char x;
-    //    char y;
-      //  atributo *np;
-
-    //np =crearAtributo(&x,&y);
-    //insertarFinal(&lp,&np);
-
-//}

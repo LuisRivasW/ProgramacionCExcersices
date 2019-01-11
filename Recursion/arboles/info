@@ -1,0 +1,5 @@
+Nodos
+oscar [ edad: 21]
+winche [ sexo: m]
+Relaciones
+oscar -> conoce -> winche
