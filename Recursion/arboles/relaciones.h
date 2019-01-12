@@ -64,7 +64,7 @@ void imprimirRelacion(relaciones *lp)
 {
     relaciones *auxp;
     for (auxp = lp; auxp != NULL; auxp = auxp->next)
-        printf("%s: %s -> %s => ", auxp->nombre, auxp->a->nombre, auxp->b->nombre);
+        printf("[%s -> %s -> %s] => ", auxp->a->nombre,  auxp->nombre, auxp->b->nombre);
     printf("NULL\n");
 }
 

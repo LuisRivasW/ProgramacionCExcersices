@@ -101,10 +101,10 @@ nodo * obtenerNodo(nodo *lp, char *nombre)
     nodo *auxp;
     for (auxp = lp; auxp != NULL; auxp = auxp->next)
     {
+        printf("%s == %s - %d\n", auxp->nombre, nombre, strcmp(auxp->nombre, nombre) );
         if (strcmp(auxp->nombre, nombre) == 0)
         {
             return auxp;
-
         }
 
     }

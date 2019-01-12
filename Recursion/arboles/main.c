@@ -1,22 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-#include "relaciones.h"
+
+// #include "relaciones.h"
+#include "lector.h"
 
 
 int main()
 {
+    lector();
     nodo *lnp = crearNodo("Oscar");
     atributo *ap = crearAtributo("edad", "21" );
-    atributo *lp = NULL;
     insertarAtributo(&lnp->ap, &ap);
     ap = crearAtributo("sexo", "M" );
     insertarAtributo(&lnp->ap, &ap);
     nodo * np = crearNodo("Winche");
     insertarNodo( &lnp, &np);
     ap = crearAtributo("edad", "21" );
-    lp = NULL;
     insertarAtributoEnNodo(&lnp, "Winche", &ap);
     ap = crearAtributo("sexo", "M" );
     insertarAtributoEnNodo(&lnp, "Winche", &ap);

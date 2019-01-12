@@ -1,5 +1,6 @@
 Nodos
-oscar [ edad: 21]
-winche [ sexo: m]
+OSCAR [ edad: veintiuno, sexo: hemafrodita]
+WINCHE [ sexo: m]
 Relaciones
-oscar -> conoce -> winche
+OSCAR -> conoce -> WINCHE;
+WINCHE -> lleva -> OSCAR;
