@@ -92,11 +92,11 @@ int lector()
             {
                 char *relacionX = NULL, *relacionY = NULL;
                 char *nodo = NULL;
-                printf("Introduzca el nombre de la relacion enmx\n");
+                printf("Introduzca el nombre de la relacion primera de X\n");
                 scanf("%s", &relacionX);
                 printf("Introduzca el nombre del nodo\n");
                 scanf("%s", &nodo);
-                printf("Introduzca el nombre de la relacion enmx\n");
+                printf("Introduzca el nombre de la relacion del Nodo dado con Y\n");
                 scanf("%s", &relacionY);
                 imprimirNodo(buscarNodosConRelacionesConRelacionesDeOtroNodo(lp, &relacionX, &nodo, &relacionY));
             }

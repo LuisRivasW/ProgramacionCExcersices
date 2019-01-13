@@ -110,11 +110,11 @@ nodo *buscarNodosConRelacionesA(relaciones *lp, char *relacionNombre, char *nodo
 
 nodo *buscarNodosConRelacionesConRelacionesDeOtroNodo(relaciones *lp, char *relacionNombre, char *nodoNombre, char *relacionNombre2)
 {
-    printf("Buscando nodos x con relacion(%s) =>  con nodo %s=> %s => y\n", relacionNombre, nodoNombre, relacionNombre2);
+    // printf("Buscando nodos x con relacion(%s) =>  con nodo %s=> %s => y\n", relacionNombre, nodoNombre, relacionNombre2);
     nodo *res = NULL;
     relaciones *auxp;
     nodo *auxNodos = buscarNodosConRelacionesA(lp, relacionNombre2, nodoNombre);
-    imprimirNodo(auxNodos);
+    // imprimirNodo(auxNodos);
     nodo *index;
     for (auxp = lp; auxp != NULL; auxp = auxp->next)
     {
