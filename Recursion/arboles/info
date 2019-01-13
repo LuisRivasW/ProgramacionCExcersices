@@ -6,4 +6,10 @@ ZACKY [ sexo: m]
 ENMANUEL [ sexo: m]
 Relaciones
 OSCAR -> conoce -> WINCHE
+MARIA -> conoce -> WINCHE
+ZACKY -> conoce -> WINCHE
 WINCHE -> lleva -> OSCAR
+WINCHE -> lleva -> ZACKY
+MARIA -> conoce -> OSCAR
+ZACKY -> conoce -> OSCAR
+MARIA -> conoce -> ZACKY

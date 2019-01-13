@@ -105,6 +105,7 @@ nodo *obtenerNodo(nodo *lp, char *nombre)
             return auxp;
         }
     }
+    printf("Nodo no encontrado\n");
     return NULL;
 }
 

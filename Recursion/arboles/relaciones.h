@@ -20,14 +20,15 @@ relaciones *crearRelacion(char *nombre, nodo *a, nodo *b)
 {
 
     printf("Crear Relacion\n");
-    relaciones *auxp;
+    relaciones *auxp = NULL;
     auxp = (relaciones *)malloc(sizeof(relaciones));
-    printf("Nodo creado\n");
+
     auxp->nombre = (char *)malloc(sizeof(char));
     auxp->a = a;
     auxp->b = b;
     strcpy(auxp->nombre, nombre);
     auxp->next = NULL;
+    printf("Relacion %s %s %s  creada\n", a->nombre, auxp->nombre, b->nombre);
     return auxp;
 }
 /**
@@ -62,9 +63,73 @@ void insertarRelacion(relaciones **lp, relaciones **np)
 }
 void imprimirRelacion(relaciones *lp)
 {
+    printf("Imprimiendo relacion\n");
     relaciones *auxp;
     for (auxp = lp; auxp != NULL; auxp = auxp->next)
-        printf("[%s -> %s -> %s] => ", auxp->a->nombre,  auxp->nombre, auxp->b->nombre);
+        printf("[%s -> %s -> %s] => ", auxp->a->nombre, auxp->nombre, auxp->b->nombre);
     printf("NULL\n");
 }
 
+nodo *buscarNodosConRelaciones(relaciones *lp, char *relacionNombre, char *nodoNombre)
+{
+    printf("Buscando nodos con relacion(%s) = '%s'\n", relacionNombre, nodoNombre);
+    nodo *res = NULL;
+    relaciones *auxp;
+    for (auxp = lp; auxp != NULL; auxp = auxp->next)
+    {
+        printf("%s =%s? && %s = %s ?\n", auxp->nombre, relacionNombre, auxp->b->nombre, nodoNombre);
+        if (strcmp(auxp->nombre, relacionNombre) == 0 && strcmp(auxp->b->nombre, nodoNombre) == 0)
+        {
+            printf("wBuscando nodos con atributo(%s) = '%s'\n", relacionNombre, nodoNombre);
+            nodo *duplicado;
+            duplicarNodo(auxp->a, &duplicado);
+            insertarNodo(&res, &duplicado);
+        }
+    }
+    return res;
+}
+
+nodo *buscarNodosConRelacionesA(relaciones *lp, char *relacionNombre, char *nodoNombre)
+{
+    // printf("Buscando nodos con relacion(%s) = '%s'\n", relacionNombre, nodoNombre);
+    nodo *res = NULL;
+    relaciones *auxp;
+    for (auxp = lp; auxp != NULL; auxp = auxp->next)
+    {
+        // printf("%s =%s? && %s = %s ?\n", auxp->nombre, relacionNombre, auxp->b->nombre, nodoNombre);
+        if (strcmp(auxp->nombre, relacionNombre) == 0 && strcmp(auxp->a->nombre, nodoNombre) == 0)
+        {
+            // printf("wBuscando nodos con atributo(%s) = '%s'\n", relacionNombre, nodoNombre);
+            nodo *duplicado;
+            duplicarNodo(auxp->b, &duplicado);
+            insertarNodo(&res, &duplicado);
+        }
+    }
+    return res;
+}
+
+nodo *buscarNodosConRelacionesConRelacionesDeOtroNodo(relaciones *lp, char *relacionNombre, char *nodoNombre, char *relacionNombre2)
+{
+    printf("Buscando nodos x con relacion(%s) =>  con nodo %s=> %s => y\n", relacionNombre, nodoNombre, relacionNombre2);
+    nodo *res = NULL;
+    relaciones *auxp;
+    nodo *auxNodos = buscarNodosConRelacionesA(lp, relacionNombre2, nodoNombre);
+    imprimirNodo(auxNodos);
+    nodo *index;
+    for (auxp = lp; auxp != NULL; auxp = auxp->next)
+    {
+        if (strcmp(auxp->nombre, relacionNombre) == 0)
+        {
+            for (index = auxNodos; index != NULL; index = index->next)
+            {
+                if (strcmp(auxp->b->nombre, index->nombre) == 0)
+                {
+                    nodo *duplicado;
+                    duplicarNodo(auxp->b, &duplicado);
+                    insertarNodo(&res, &duplicado);
+                }
+            }
+        }
+    }
+    return res;
+}
