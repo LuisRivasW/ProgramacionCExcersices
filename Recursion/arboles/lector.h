@@ -23,22 +23,62 @@
 int lector()
 {
 
+    int datosCargados = 0;
     char opc[200] = {'1', '\0'};
+    char opc2[200] = {'1', '\0'};
+    nodo *np = NULL;
+    relaciones *lp = NULL;
     while (opc[0] != '3')
     {
         printf("████████████████████████████████████████████████████████████████████████╗\n");
         printf("█                                                                      █║\n");
         printf("█   Porfavor introduzca una opcion valida para procesar su desicion    █║\n");
         printf("█                                                                      █║\n");
+        if (datosCargados == 1)
+        {
+
+            printf("█               (Datos ya Cargados)                                    █║\n");
+        }
+        else
+        {
+            printf("█               (Datos sin cargar)                                     █║\n");
+        }
+        printf("█                                                                      █║\n");
         printf("█                1.-Leer el archivo de entrada                         █║\n");
-        printf("█                2.-Resetear archivos generados                        █║\n");
-        printf("█                   3.-Salir del programa                              █║\n");
+        printf("█                2.-Hacer consultas                                    █║\n");
+        printf("█                3.-Salir del programa                                 █║\n");
         printf("█                                                                      █║\n");
         printf("████████████████████████████████████████████████████████████████████████║\n");
         printf("╚═══════════════════════════════════════════════════════════════════════╝\n");
 
         scanf("%s", &opc);
         system("clear");
+
+        if (opc[0] == '2')
+        {
+            printf("████████████████████████████████████████████████████████████████████████╗\n");
+            printf("█                                                                      █║\n");
+            printf("█   Porfavor introduzca un modo pregunta valida para procesar su desicion    █║\n");
+            printf("█                                                                      █║\n");
+            printf("█                                                                      █║\n");
+            printf("█                1.- x.atributo == valor?                              █║\n");
+            printf("█                2.- x->relacion == nodo?                              █║\n");
+            printf("█                3.- x->relacion == nodo->relacion?                    █║\n");
+            printf("█                                                                      █║\n");
+            printf("████████████████████████████████████████████████████████████████████████║\n");
+            printf("╚═══════════════════════════════════════════════════════════════════════╝\n");
+            scanf("%s", &opc2);
+            if (opc2[0] == '1')
+            {
+                char *valor = NULL;
+                char *nombre = NULL;
+                printf("Introduzca el nombre del atributp\n");
+                scanf("%s", &nombre);
+                printf("Introduzca el valor del atributp\n");
+                scanf("%s", &valor);
+                imprimirNodo(buscarNodosConAtributo(np, &nombre, &valor));
+            }
+        }
 
         if (opc[0] == '1')
         {
@@ -74,7 +114,7 @@ int lector()
                 {
 
                     char *buffer2 = malloc(strlen(buffer) * sizeof(buffer2));
-                    int  modo = 0;
+                    int modo = 0;
                     char *nombre = malloc(strlen(buffer) * sizeof(buffer2));
                     char *nombreAtributo = malloc(strlen(buffer) * sizeof(buffer2));
                     char *nombreRelacion = malloc(strlen(buffer) * sizeof(buffer2));
@@ -87,9 +127,6 @@ int lector()
                     atributo *atributoTemporal = NULL;
                     relaciones *relacionTemporal = NULL;
 
-                    nodo *np = NULL;
-                    relaciones *lp = NULL;
-
                     strcpy(nombre, "");
                     strcpy(a, "");
                     strcpy(b, "");
@@ -101,92 +138,108 @@ int lector()
                     // 1 = buscando nombre de atributo
                     for (i = 4; i < strlen(buffer); i++)
                     {
-                        if (!(buffer[i] == '\r' || buffer[i] == '\t' || buffer[i] == ' ' || buffer[i] == '\n'))
+                        if (!(buffer[i] == '\r' || buffer[i] == '\t' || buffer[i] == ' '))
                         {
+
                             printf("%c - %d\n", buffer[i], i);
                             switch (modo)
                             {
                             case 0:
-                                if (!(buffer[i] < 'A' || buffer[i] > 'Z'))
+                                if (buffer[i] != '\n')
                                 {
-                                    nombre[strlen(nombre)] = buffer[i];
-                                }
-                                else if (buffer[i] == '[')
-                                {
-                                    printf("Nodo: %s, creado\n", nombre);
-                                    nodoTemporal = crearNodo(nombre);
-                                    insertarNodo(&np, &nodoTemporal);
-                                    imprimirNodo(np);
-                                    nombre = malloc(strlen(buffer) * sizeof(buffer2));
-                                    modo = 1;
+                                    if (!(buffer[i] < 'A' || buffer[i] > 'Z'))
+                                    {
+                                        nombre[strlen(nombre)] = buffer[i];
+                                    }
+                                    else if (buffer[i] == '[')
+                                    {
+                                        printf("Nodo: %s, creado\n", nombre);
+                                        nodoTemporal = crearNodo(nombre);
+                                        insertarNodo(&np, &nodoTemporal);
+                                        imprimirNodo(np);
+                                        nombre = malloc(strlen(buffer) * sizeof(buffer2));
+                                        modo = 1;
+                                    }
                                 }
                                 break;
                             case 1:
-                                if (!(buffer[i] < 'a' || buffer[i] > 'z') || buffer[i] == '_')
+                                if (buffer[i] != '\n')
                                 {
-                                    nombreAtributo[strlen(nombreAtributo)] = buffer[i];
-                                }
-                                else if (buffer[i] == ':')
-                                {
-                                    modo = 2;
+                                    if (!(buffer[i] < 'a' || buffer[i] > 'z') || buffer[i] == '_')
+                                    {
+                                        nombreAtributo[strlen(nombreAtributo)] = buffer[i];
+                                    }
+                                    else if (buffer[i] == ':')
+                                    {
+                                        modo = 2;
+                                    }
                                 }
                                 break;
                             case 2:
-                                if (!(buffer[i] < 'a' || buffer[i] > 'z') || buffer[i] == '_')
+                                if (buffer[i] != '\n')
                                 {
-                                    valorAtributo[strlen(valorAtributo)] = buffer[i];
-                                }
-                                else if (buffer[i] == ',')
-                                {
-                                    printf("Atributo %s: %s creado\n", nombreAtributo, valorAtributo);
-                                    atributoTemporal = crearAtributo(nombreAtributo, valorAtributo);
-                                    insertarAtributo(&nodoTemporal->ap, &atributoTemporal);
-                                    nombreAtributo  = malloc(strlen(buffer) * sizeof(buffer2));
-                                    valorAtributo  = malloc(strlen(buffer) * sizeof(buffer2));
-
-                                    modo = 1;
-                                }
-                                else if (buffer[i] == ']')
-                                {
-                                    printf("Atributo %s: %s creado\n", nombreAtributo, valorAtributo);
-                                    atributoTemporal = crearAtributo(nombreAtributo, valorAtributo);
-                                    insertarAtributo(&nodoTemporal->ap, &atributoTemporal);
-                                    nombreAtributo  = malloc(strlen(buffer) * sizeof(buffer2));
-                                    valorAtributo  = malloc(strlen(buffer) * sizeof(buffer2));
-                                    if (buffer[i + 3] == 'R' && buffer[i + 4] == 'e')
+                                    if (!(buffer[i] < 'a' || buffer[i] > 'z') || buffer[i] == '_')
                                     {
-                                        modo = 3;
-                                        i += 12;
+                                        valorAtributo[strlen(valorAtributo)] = buffer[i];
                                     }
-                                    else
+                                    else if (buffer[i] == ',')
                                     {
-                                        modo = 0;
+                                        printf("Atributo %s: %s creado\n", nombreAtributo, valorAtributo);
+                                        atributoTemporal = crearAtributo(nombreAtributo, valorAtributo);
+                                        insertarAtributo(&nodoTemporal->ap, &atributoTemporal);
+                                        nombreAtributo = malloc(strlen(buffer) * sizeof(buffer2));
+                                        valorAtributo = malloc(strlen(buffer) * sizeof(buffer2));
+
+                                        modo = 1;
+                                    }
+                                    else if (buffer[i] == ']')
+                                    {
+                                        printf("Atributo %s: %s creado\n", nombreAtributo, valorAtributo);
+                                        atributoTemporal = crearAtributo(nombreAtributo, valorAtributo);
+                                        insertarAtributo(&nodoTemporal->ap, &atributoTemporal);
+                                        nombreAtributo = malloc(strlen(buffer) * sizeof(buffer2));
+                                        valorAtributo = malloc(strlen(buffer) * sizeof(buffer2));
+                                        if (buffer[i + 3] == 'R' && buffer[i + 4] == 'e')
+                                        {
+                                            modo = 3;
+                                            i += 12;
+                                        }
+                                        else
+                                        {
+                                            modo = 0;
+                                        }
                                     }
                                 }
                                 break;
                             case 3:
-                                if (!(buffer[i] < 'A' || buffer[i] > 'Z'))
+                                if (buffer[i] != '\n')
                                 {
-                                    a[strlen(a)] =buffer[i];
-                                }
-                                else if (buffer[i] == '-' && buffer[i + 1] == '>')
-                                {
-                                    i++;
-                                    printf("A obtenido => %s \n", a);
-                                    modo = 4;
+                                    if (!(buffer[i] < 'A' || buffer[i] > 'Z'))
+                                    {
+                                        a[strlen(a)] = buffer[i];
+                                    }
+                                    else if (buffer[i] == '-' && buffer[i + 1] == '>')
+                                    {
+                                        i++;
+                                        printf("A obtenido => %s \n", a);
+                                        modo = 4;
+                                    }
                                 }
                                 break;
 
-                             case 4:
-                                if (!(buffer[i] < 'a' || buffer[i] > 'z') || buffer[i] == '_')
+                            case 4:
+                                if (buffer[i] != '\n')
                                 {
-                                    nombreRelacion[strlen(nombreRelacion)] = buffer[i];
-                                }
-                                else if (buffer[i] == '-' && buffer[i + 1] == '>')
-                                {
-                                    printf("Relacion => %s \n", nombreRelacion);
-                                    i++;
-                                    modo = 5;
+                                    if (!(buffer[i] < 'a' || buffer[i] > 'z') || buffer[i] == '_')
+                                    {
+                                        nombreRelacion[strlen(nombreRelacion)] = buffer[i];
+                                    }
+                                    else if (buffer[i] == '-' && buffer[i + 1] == '>')
+                                    {
+                                        printf("Relacion => %s \n", nombreRelacion);
+                                        i++;
+                                        modo = 5;
+                                    }
                                 }
                                 break;
                             case 5:
@@ -194,17 +247,17 @@ int lector()
                                 {
                                     b[strlen(b)] = buffer[i];
                                 }
-                                else if (buffer[i] == ';')
+                                else if (buffer[i] == '\n')
                                 {
                                     printf("B obtenido => %s \n", b);
                                     imprimirNodo(np);
                                     aTemporal = obtenerNodo(np, a);
                                     bTemporal = obtenerNodo(np, b);
                                     // imprimirNodo(aTemporal);
-                                    relacionTemporal = crearRelacion(nombreRelacion, aTemporal, bTemporal );
+                                    relacionTemporal = crearRelacion(nombreRelacion, aTemporal, bTemporal);
                                     insertarRelacion(&lp, &relacionTemporal);
                                     a = malloc(strlen(buffer) * sizeof(buffer2));
-                                    b= malloc(strlen(buffer) * sizeof(buffer2));
+                                    b = malloc(strlen(buffer) * sizeof(buffer2));
                                     nombreRelacion = malloc(strlen(buffer) * sizeof(buffer2));
 
                                     modo = 3;
@@ -213,10 +266,11 @@ int lector()
                             }
                         }
                     }
-                    
-                    imprimirNodo(np);
-                    printf("relaciones:\n");
-                    imprimirRelacion(lp);
+
+                    // imprimirNodo(np);
+                    // printf("relaciones:\n");
+                    // imprimirRelacion(lp);
+                    datosCargados = 1;
                 }
                 // printf("Cabecera nodos correcta\n Obteniendo Nodos ...\n");
                 // char * buffer2 = malloc(strlen(buffer) * sizeof(buffer2));
@@ -260,22 +314,22 @@ int lector()
                 // printf("%s\n", buffer);
                 // printf("%s", eliminarEspacios(buffer2));
             }
+            else
+            {
+                printf("El archivo no se encontro\n");
+                printf("Ingrese el nombre correcto del archivo\n");
+
+                sleep(3);
+                system("clear");
+            }
 
             // strcat(cad, "\0");
             // printf(cad);
         }
-        else
-        {
-            printf("El archivo no se encontro\n");
-            printf("Ingrese el nombre correcto del archivo\n");
 
-            sleep(3);
-            system("clear");
-        }
         printf("1\n");
     }
 }
-
 
 // nodo *stringToNodos(char *texto)
 // {

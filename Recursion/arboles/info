@@ -1,6 +1,9 @@
 Nodos
 OSCAR [ edad: veintiuno, sexo: hemafrodita]
 WINCHE [ sexo: m]
+MARIA [ sexo: f]
+ZACKY [ sexo: m]
+ENMANUEL [ sexo: m]
 Relaciones
-OSCAR -> conoce -> WINCHE;
-WINCHE -> lleva -> OSCAR;
+OSCAR -> conoce -> WINCHE
+WINCHE -> lleva -> OSCAR
