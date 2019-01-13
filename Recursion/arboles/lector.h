@@ -100,8 +100,7 @@ int lector()
                 scanf("%s", &relacionY);
                 imprimirNodo(buscarNodosConRelacionesConRelacionesDeOtroNodo(lp, &relacionX, &nodo, &relacionY));
             }
-            
-        }
+                }
 
         if (opc[0] == '1')
         {
@@ -171,7 +170,7 @@ int lector()
                         if (!(buffer[i] == '\r' || buffer[i] == '\t' || buffer[i] == ' '))
                         {
 
-                            printf("%c - %d\n", buffer[i], i);
+                            // printf("%c - %d\n", buffer[i], i);
                             switch (modo)
                             {
                             case 0:
@@ -223,7 +222,7 @@ int lector()
                                     }
                                     else if (buffer[i] == ',')
                                     {
-                                        printf("Atributo %s: %s creado\n", nombreAtributo, valorAtributo);
+                                        // printf("Atributo %s: %s creado\n", nombreAtributo, valorAtributo);
                                         atributoTemporal = crearAtributo(nombreAtributo, valorAtributo);
                                         insertarAtributo(&nodoTemporal->ap, &atributoTemporal);
                                         memset(nombreAtributo, 0, sizeof(nombreAtributo));
@@ -264,7 +263,7 @@ int lector()
                                     else if (buffer[i] == '-' && buffer[i + 1] == '>')
                                     {
                                         i++;
-                                        printf("A obtenido => %s \n", a);
+                                        // printf("A obtenido => %s \n", a);
                                         modo = 4;
                                     }
                                 }
@@ -279,7 +278,7 @@ int lector()
                                     }
                                     else if (buffer[i] == '-' && buffer[i + 1] == '>')
                                     {
-                                        printf("Relacion => %s \n", nombreRelacion);
+                                        // printf("Relacion => %s \n", nombreRelacion);
                                         i++;
                                         modo = 5;
                                     }
@@ -292,15 +291,15 @@ int lector()
                                 }
                                 else if (buffer[i] == '\n')
                                 {
-                                    printf("B obtenido => %s \n", b);
-                                    imprimirNodo(np);
+                                    // printf("B obtenido => %s \n", b);
+                                    // imprimirNodo(np);
                                     aTemporal = obtenerNodo(np, a);
                                     bTemporal = obtenerNodo(np, b);
                                     // imprimirNodo(aTemporal);
                                     relacionTemporal = crearRelacion(nombreRelacion, aTemporal, bTemporal);
-                                    imprimirRelacion(relacionTemporal);
+                                    // imprimirRelacion(relacionTemporal);
                                     insertarRelacion(&lp, &relacionTemporal);
-                                    imprimirRelacion(lp);
+                                    // imprimirRelacion(lp);
                                     memset(a, 0, sizeof(a));
                                     memset(b, 0, sizeof(b));
                                     memset(nombreRelacion, 0, sizeof(nombreRelacion));
@@ -317,7 +316,7 @@ int lector()
 
                     imprimirNodo(np);
                     // printf("relaciones:\n");
-                    // imprimirRelacion(lp);
+                    imprimirRelacion(lp);
                     datosCargados = 1;
                 }
                 // printf("Cabecera nodos correcta\n Obteniendo Nodos ...\n");
